@@ -1,0 +1,20 @@
+﻿using AutoMapper;
+using DesafioTecEngLocaliza.Application.DTO;
+using DesafioTecEngLocaliza.Domain;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DesafioTecEngLocaliza.Application.Mapeamento
+{
+    public class DesafioLocalizaMapeamento : Profile
+    {
+
+        public DesafioLocalizaMapeamento()
+        {
+            //Usario
+            CreateMap<Usuario, UsuarioDto>().ReverseMap();
+
+        }
+    }
+}

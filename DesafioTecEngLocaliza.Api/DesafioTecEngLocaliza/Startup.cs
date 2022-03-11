@@ -1,4 +1,8 @@
+using DesafioTecEngLocaliza.Application;
+using DesafioTecEngLocaliza.Application.Contratos;
+using DesafioTecEngLocaliza.Persistence;
 using DesafioTecEngLocaliza.Persistence.Contexto;
+using DesafioTecEngLocaliza.Persistence.Contratos;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,7 +42,9 @@ namespace DesafioTecEngLocaliza
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddScoped<IContaService, ContaService>();
 
+            services.AddScoped<IGeralPersistence, GeralPersistence>();
 
             services.AddCors();
             services.AddControllers();

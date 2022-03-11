@@ -4,9 +4,9 @@ using System.Text;
 
 namespace DesafioTecEngLocaliza.Application.DTO
 {
-    public class UsuarioDto
+    public class LoginClienteDto
     {
-        public string Login { get; set; }
+        public string CPF { get; set; }
         public string Senha { get; set; }
     }
 }
