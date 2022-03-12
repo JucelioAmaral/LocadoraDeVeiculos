@@ -8,6 +8,6 @@ namespace DesafioTecEngLocaliza.Persistence.Contratos
 {
     public interface IOperadorPersistence
     {
-        
+        Task<Operador> GetOperadorPorMatricula(string matricula);
     }
 }

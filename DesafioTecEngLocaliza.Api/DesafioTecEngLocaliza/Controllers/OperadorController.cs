@@ -1,4 +1,6 @@
-﻿using DesafioTecEngLocaliza.Application.DTO;
+﻿using DesafioTecEngLocaliza.Application.Contratos;
+using DesafioTecEngLocaliza.Application.DTO;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,23 +9,34 @@ using System.Threading.Tasks;
 
 namespace DesafioTecEngLocaliza.Api.Controllers
 {
-    public class OperadorController
+    [ApiController]
+    [Route("[controller]")]
+    public class OperadorController : ControllerBase
     {
+        private readonly IOperadorService _operadorService;
 
-        //[HttpPost("Registra")]
-        //public async Task<IActionResult> Registra(OperadorDto operadorDto)
-        //{
-        //    try
-        //    {
-        //        var usuario = await _contaService.AddUsuario(usuarioLogin);
-        //        if (usuario == null) return NoContent();
+        public OperadorController(IOperadorService operadorService)
+        {
+            _operadorService = operadorService;
+        }
+        [HttpPost("Registra")]
+        public async Task<IActionResult> Registra(OperadorDto operadorDto)
+        {
+            try
+            {
+                var existeOperador = await _operadorService.GetOperadorPorMatriculaAsync(operadorDto.Matricula);
+                if (existeOperador == null)
+                {
+                    var cliente = await _operadorService.AddOperador(operadorDto);
+                    return Ok(cliente);
+                }
+                return BadRequest("Operador já cadastrado.");
 
-        //        return Ok(usuario);
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar registrar o operador. Erro: {ex.Message}");
-        //    }
-        //}
+            }
+            catch (System.Exception ex)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar registrar o operador. Erro: {ex.Message}");
+            }
+        }
     }
 }
