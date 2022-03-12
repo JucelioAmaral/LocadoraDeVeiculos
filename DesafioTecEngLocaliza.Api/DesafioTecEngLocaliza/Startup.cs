@@ -43,8 +43,12 @@ namespace DesafioTecEngLocaliza
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IContaService, ContaService>();
+            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IOperadorService, OperadorService>();
 
             services.AddScoped<IGeralPersistence, GeralPersistence>();
+            services.AddScoped<IClientePersistence, ClientePersistence>();
+            services.AddScoped<IOperadorPersistence, OperadorPersistence>();
 
             services.AddCors();
             services.AddControllers();

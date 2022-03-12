@@ -17,10 +17,12 @@ namespace DesafioTecEngLocaliza.Controllers
     public class ContaController : ControllerBase
     {
         private readonly IContaService _contaService;
+        private readonly IClienteService _clienteService;
 
-        public ContaController(IContaService contaService)
+        public ContaController(IContaService contaService, IClienteService clienteService)
         {
             _contaService = contaService;
+            _clienteService = clienteService;
         }
 
         [HttpPost("Registra")]
@@ -29,7 +31,7 @@ namespace DesafioTecEngLocaliza.Controllers
             try
             {
                 var usuario = await _contaService.AddUsuario(usuarioLogin);
-                if (usuario == null) return NoContent();
+                if (usuario == null) return BadRequest("Usuário já cadastrado");
 
                 return Ok(usuario);
             }
@@ -45,6 +47,11 @@ namespace DesafioTecEngLocaliza.Controllers
         {
             try
             {
+                var cliente = await _clienteService.GetClientePorCpfAsync(clienteLogin.CPF);
+                if (cliente == null) return Unauthorized("CPF não encontrado.");
+
+
+
                 return null;
             }
             catch (System.Exception ex)
