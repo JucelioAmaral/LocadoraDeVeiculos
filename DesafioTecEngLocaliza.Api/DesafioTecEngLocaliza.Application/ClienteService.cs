@@ -43,5 +43,23 @@ namespace DesafioTecEngLocaliza.Application
             }
             return null;
         }
+
+        public async Task<Cliente> ValidaLoginClienteAsync(string cpf, string senha)
+        {
+            var usuario = await _clientePersistence.GetLoginClienteTblUsuario(cpf);
+            if (usuario != null)
+            {
+                if(cpf == usuario.Login && senha == usuario.Senha)
+                {
+                    var cliente = await _clientePersistence.GetClientePorCPF(cpf);
+                    if (cliente != null)
+                    {
+                        return _mapper.Map<Cliente>(cliente);
+                    }
+                    return null;
+                }                
+            }
+            return null;
+        }
     }
 }

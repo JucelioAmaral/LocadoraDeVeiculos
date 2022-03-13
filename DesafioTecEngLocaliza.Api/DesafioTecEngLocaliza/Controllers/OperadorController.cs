@@ -27,8 +27,8 @@ namespace DesafioTecEngLocaliza.Api.Controllers
                 var existeOperador = await _operadorService.GetOperadorPorMatriculaAsync(operadorDto.Matricula);
                 if (existeOperador == null)
                 {
-                    var cliente = await _operadorService.AddOperador(operadorDto);
-                    return Ok(cliente);
+                    var operador = await _operadorService.AddOperador(operadorDto);
+                    return Ok(operador);
                 }
                 return BadRequest("Operador já cadastrado.");
 

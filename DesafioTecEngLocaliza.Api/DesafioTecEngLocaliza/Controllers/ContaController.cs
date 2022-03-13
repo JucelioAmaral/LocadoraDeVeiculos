@@ -1,4 +1,5 @@
-﻿using DesafioTecEngLocaliza.Application.Contratos;
+﻿using AutoMapper;
+using DesafioTecEngLocaliza.Application.Contratos;
 using DesafioTecEngLocaliza.Application.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,13 +17,17 @@ namespace DesafioTecEngLocaliza.Controllers
     [AllowAnonymous]
     public class ContaController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private readonly IContaService _contaService;
         private readonly IClienteService _clienteService;
+        private readonly IOperadorService _operadorService;
 
-        public ContaController(IContaService contaService, IClienteService clienteService)
+        public ContaController(IMapper mapper, IContaService contaService, IClienteService clienteService, IOperadorService operadorService)
         {
+            _mapper = mapper;
             _contaService = contaService;
             _clienteService = clienteService;
+            _operadorService = operadorService;
         }
 
         [HttpPost("Registra")]
@@ -47,12 +52,10 @@ namespace DesafioTecEngLocaliza.Controllers
         {
             try
             {
-                var cliente = await _clienteService.GetClientePorCpfAsync(clienteLogin.CPF);
-                if (cliente == null) return Unauthorized("CPF não encontrado.");
+                var loginCliente = await _clienteService.ValidaLoginClienteAsync(clienteLogin.CPF, clienteLogin.Senha);
+                if (loginCliente == null) return Unauthorized("Login ou senha inválidos.");
 
-
-
-                return null;
+                return Ok(_mapper.Map<ClienteDto>(loginCliente));                             
             }
             catch (System.Exception ex)
             {
@@ -62,11 +65,14 @@ namespace DesafioTecEngLocaliza.Controllers
 
         [HttpPost("Login/Operador")]
         [AllowAnonymous]
-        public async Task<IActionResult> LoginOperador(LoginOperadorDto clienteLogin)
+        public async Task<IActionResult> LoginOperador(LoginOperadorDto operadorLogin)
         {
             try
             {
-                return null;
+                var loginOperador = await _operadorService.ValidaLoginOperadorAsync(operadorLogin.Matricula, operadorLogin.Senha);
+                if (loginOperador == null) return Unauthorized("Login ou senha inválidos.");
+                
+                return Ok(_mapper.Map<OperadorDto>(loginOperador));
             }
             catch (System.Exception ex)
             {

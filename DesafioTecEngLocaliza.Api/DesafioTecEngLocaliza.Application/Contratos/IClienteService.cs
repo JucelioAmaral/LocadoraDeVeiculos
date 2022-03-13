@@ -11,5 +11,6 @@ namespace DesafioTecEngLocaliza.Application.Contratos
     {
         Task<ClienteDto> AddCliente(ClienteDto model);
         Task<Cliente> GetClientePorCpfAsync(string CPF);
+        Task<Cliente> ValidaLoginClienteAsync(string CPF, string senha);
     }
 }

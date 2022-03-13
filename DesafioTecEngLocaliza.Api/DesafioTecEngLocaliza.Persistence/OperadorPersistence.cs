@@ -25,5 +25,12 @@ namespace DesafioTecEngLocaliza.Persistence
             query = query.AsNoTracking().OrderBy(o => o.Matricula).Where(o => o.Matricula == matricula);
             return query.FirstOrDefault();
         }
+
+        public async Task<Usuario> GetLoginOperadorTblUsuario(string matricula)
+        {
+            IQueryable<Usuario> query = _context.tblUsuario;
+            query = query.AsNoTracking().OrderBy(u => u.Login).Where(u => u.Login == matricula);
+            return query.FirstOrDefault();
+        }
     }
 }

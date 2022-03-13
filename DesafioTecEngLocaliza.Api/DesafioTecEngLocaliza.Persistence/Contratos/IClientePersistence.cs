@@ -9,5 +9,6 @@ namespace DesafioTecEngLocaliza.Persistence.Contratos
     public interface IClientePersistence
     {
         Task<Cliente> GetClientePorCPF(string cpf);
+        Task<Usuario> GetLoginClienteTblUsuario(string CPF);        
     }
 }

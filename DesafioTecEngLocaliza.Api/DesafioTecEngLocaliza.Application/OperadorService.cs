@@ -43,5 +43,23 @@ namespace DesafioTecEngLocaliza.Application
             }
             return null;
         }
+
+        public async Task<Operador> ValidaLoginOperadorAsync(string matricula, string senha)
+        {
+            var usuario = await _operadorPersistence.GetLoginOperadorTblUsuario(matricula);
+            if (usuario != null)
+            {
+                if (matricula == usuario.Login && senha == usuario.Senha)
+                {
+                    var operador = await _operadorPersistence.GetOperadorPorMatricula(matricula);
+                    if (operador != null)
+                    {
+                        return _mapper.Map<Operador>(operador);
+                    }
+                    return null;
+                }
+            }
+            return null;
+        }
     }
 }
