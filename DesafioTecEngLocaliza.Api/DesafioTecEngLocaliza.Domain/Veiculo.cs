@@ -16,7 +16,7 @@ namespace DesafioTecEngLocaliza.Domain
         public Marca Marca { get; set; }
         public int? ModeloId { get; set; }
         public Modelo Modelo { get; set; }
-        public DateTime? Ano { get; set; }
+        public int Ano { get; set; }
         public double ValorHora { get; set; }
         public Combustivel Combustivel { get; set; }
         public double LimitePortaMalas { get; set; }

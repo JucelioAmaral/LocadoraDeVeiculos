@@ -48,6 +48,7 @@ namespace DesafioTecEngLocaliza
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IMarcaService, MarcaService>();
             services.AddScoped<IModeloService, ModeloService>();
+            services.AddScoped<IVeiculoService, VeiculoService>();
 
             services.AddScoped<IGeralPersistence, GeralPersistence>();
             services.AddScoped<IClientePersistence, ClientePersistence>();
@@ -55,6 +56,7 @@ namespace DesafioTecEngLocaliza
             services.AddScoped<IUsuarioPersistence, UsuarioPersistence>();
             services.AddScoped<IMarcaPersistence, MarcaPersistence>();
             services.AddScoped<IModeloPersistence, ModeloPersistence>();
+            services.AddScoped<IVeiculoPersistence, VeiculoPersistence>();
 
             services.AddCors();
             services.AddControllers();

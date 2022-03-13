@@ -8,10 +8,10 @@ namespace DesafioTecEngLocaliza.Application.Dtos
         public string Placa { get; set; }        
         public MarcaDto Marca { get; set; }        
         public ModeloDto Modelo { get; set; }
-        public DateTime? Ano { get; set; }
+        public int? Ano { get; set; }
         public double ValorHora { get; set; }
         public string Combustivel { get; set; }
-        public double LimitePortaMalas { get; set; }
+        public int LimitePortaMalas { get; set; }
         public string Categoria { get; set; }
     }
 }
