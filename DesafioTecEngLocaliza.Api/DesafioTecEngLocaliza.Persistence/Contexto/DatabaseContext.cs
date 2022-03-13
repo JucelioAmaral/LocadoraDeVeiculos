@@ -15,6 +15,9 @@ namespace DesafioTecEngLocaliza.Persistence.Contexto
         public DbSet<Endereco> tblEndereco { get; set; }
         public DbSet<Operador> tblOperador { get; set; }
         public DbSet<Usuario> tblUsuario { get; set; }
+        public DbSet<Veiculo> tblVeiculo { get; set; }
+        public DbSet<Marca> tblMarca { get; set; }
+        public DbSet<Modelo> tblModelo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
