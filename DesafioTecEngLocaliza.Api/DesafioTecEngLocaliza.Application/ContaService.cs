@@ -12,11 +12,13 @@ namespace DesafioTecEngLocaliza.Application
     {
         private readonly IMapper _mapper;
         private readonly IGeralPersistence _geralPersistence;
+        private readonly IUsuarioPersistence _usuarioPersistence;
 
-        public ContaService(IMapper mapper, IGeralPersistence geralPersistence)
+        public ContaService(IMapper mapper, IGeralPersistence geralPersistence, IUsuarioPersistence usuarioPersistence)
         {
             _mapper = mapper;
             _geralPersistence = geralPersistence;
+            _usuarioPersistence = usuarioPersistence;
         }
 
         public async Task<UsuarioDto> AddUsuario(UsuarioDto model)
@@ -26,6 +28,16 @@ namespace DesafioTecEngLocaliza.Application
             if (await _geralPersistence.SaveChangesAsync())
             {
                 return _mapper.Map<UsuarioDto>(usuario);
+            }
+            return null;
+        }
+
+        public async Task<Usuario> ValidaLoginAsync(string login)
+        {
+            var usuario = await _usuarioPersistence.GetLoginPorLogin(login);
+            if (usuario != null)
+            {
+                return _mapper.Map<Usuario>(usuario);
             }
             return null;
         }

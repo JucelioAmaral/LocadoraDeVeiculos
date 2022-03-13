@@ -21,13 +21,15 @@ namespace DesafioTecEngLocaliza.Controllers
         private readonly IContaService _contaService;
         private readonly IClienteService _clienteService;
         private readonly IOperadorService _operadorService;
+        private readonly IUsuarioService _usuarioService;
 
-        public ContaController(IMapper mapper, IContaService contaService, IClienteService clienteService, IOperadorService operadorService)
+        public ContaController(IMapper mapper, IContaService contaService, IClienteService clienteService, IOperadorService operadorService, IUsuarioService usuarioService)
         {
             _mapper = mapper;
             _contaService = contaService;
             _clienteService = clienteService;
             _operadorService = operadorService;
+            _usuarioService = usuarioService;
         }
 
         [HttpPost("Registra")]
@@ -35,14 +37,19 @@ namespace DesafioTecEngLocaliza.Controllers
         {
             try
             {
-                var usuario = await _contaService.AddUsuario(usuarioLogin);
-                if (usuario == null) return BadRequest("Usuário já cadastrado");
+                var loginUsuario = await _usuarioService.GetLoginAsync(usuarioLogin.Login);
+                if (loginUsuario == null)
+                {
+                    var usuario = await _contaService.AddUsuario(usuarioLogin);
+                    if (usuario == null) return BadRequest("Usuário já cadastrado.");
 
-                return Ok(usuario);
+                    return Ok(usuario);
+                }
+                return BadRequest("Usuário já cadastrado.");
             }
             catch (System.Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError,$"Erro ao tentar registrar usuário. Erro: {ex.Message}");
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar registrar usuário. Erro: {ex.Message}");
             }
         }
 
@@ -55,11 +62,11 @@ namespace DesafioTecEngLocaliza.Controllers
                 var loginCliente = await _clienteService.ValidaLoginClienteAsync(clienteLogin.CPF, clienteLogin.Senha);
                 if (loginCliente == null) return Unauthorized("Login ou senha inválidos.");
 
-                return Ok(_mapper.Map<ClienteDto>(loginCliente));                             
+                return Ok(_mapper.Map<ClienteDto>(loginCliente));
             }
             catch (System.Exception ex)
             {
-                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar fazer login com o Cliente informado. Erro: {ex.Message}");                
+                return this.StatusCode(StatusCodes.Status500InternalServerError, $"Erro ao tentar fazer login com o Cliente informado. Erro: {ex.Message}");
             }
         }
 
@@ -71,7 +78,7 @@ namespace DesafioTecEngLocaliza.Controllers
             {
                 var loginOperador = await _operadorService.ValidaLoginOperadorAsync(operadorLogin.Matricula, operadorLogin.Senha);
                 if (loginOperador == null) return Unauthorized("Login ou senha inválidos.");
-                
+
                 return Ok(_mapper.Map<OperadorDto>(loginOperador));
             }
             catch (System.Exception ex)
