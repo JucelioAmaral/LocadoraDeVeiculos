@@ -46,11 +46,13 @@ namespace DesafioTecEngLocaliza
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IOperadorService, OperadorService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IMarcaService, MarcaService>();
 
             services.AddScoped<IGeralPersistence, GeralPersistence>();
             services.AddScoped<IClientePersistence, ClientePersistence>();
             services.AddScoped<IOperadorPersistence, OperadorPersistence>();
             services.AddScoped<IUsuarioPersistence, UsuarioPersistence>();
+            services.AddScoped<IMarcaPersistence, MarcaPersistence>();
 
             services.AddCors();
             services.AddControllers();

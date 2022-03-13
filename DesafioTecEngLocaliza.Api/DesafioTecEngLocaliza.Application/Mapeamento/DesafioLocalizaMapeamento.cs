@@ -17,6 +17,7 @@ namespace DesafioTecEngLocaliza.Application.Mapeamento
             CreateMap<Cliente, ClienteDto>().ReverseMap();
             CreateMap<Endereco, EnderecoDto>().ReverseMap();
             CreateMap<Operador, OperadorDto>().ReverseMap();
+            CreateMap<Marca, MarcaDto>().ReverseMap();
         }
     }
 }
