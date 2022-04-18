@@ -6,7 +6,7 @@ namespace DesafioTecEngLocaliza.Domain.Enum
 {
     public enum Categoria
     {
-        Bascio = 1,
+        Basico = 1,
         Completo = 2,
         Luxo = 3
     }

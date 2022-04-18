@@ -26,10 +26,23 @@ namespace DesafioTecEngLocaliza.Application
 
         public async Task<VeiculoDto> AddVeiculo(int IdMarca, int IdModelo,VeiculoDto model)
         {
+            //SOLUÇÃO para o Entity Framework não duplicar registro nas tabelas consultadas:
+            //https://docs.microsoft.com/en-us/archive/msdn-magazine/2013/april/data-points-why-does-entity-framework-reinsert-existing-objects-into-my-database
+            var veiculo = new Veiculo
+            {
+                Placa = model.Placa,
+                MarcaId = IdMarca,
+                ModeloId = IdModelo,
+                Ano = (int)model.Ano,
+                ValorHora = model.ValorHora,
+                Combustivel = (Combustivel)Enum.Parse(typeof(Combustivel), model.Combustivel),//converter string em enum c#: https://www.delftstack.com/pt/howto/csharp/how-to-convert-string-to-enum-in-csharp/
+                LimitePortaMalas = model.LimitePortaMalas,
+                Categoria = (Categoria)Enum.Parse(typeof(Categoria), model.Categoria)//converter string em enum c#: https://www.delftstack.com/pt/howto/csharp/how-to-convert-string-to-enum-in-csharp/
+            };
 
-            var veiculo = _mapper.Map<Veiculo>(model);
-            veiculo.MarcaId = IdMarca;
-            veiculo.ModeloId = IdModelo;
+            //var veiculo = _mapper.Map<Veiculo>(model);
+            //veiculo.MarcaId = IdMarca;
+            //veiculo.ModeloId = IdModelo;
             _geralPersistence.Add<Veiculo>(veiculo);
             if (await _geralPersistence.SaveChangesAsync())
             {
